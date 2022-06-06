@@ -1,0 +1,53 @@
+# update and upgrade system
+apt-get update
+apt-get upgrade
+apt-get update
+
+#BMP library necessary for necessary for BMP180 sensor
+
+sudo apt-get install build-essential python3-dev
+git clone https://github.com/coding-world/Python_BMP.git
+cd Python_BMP
+sudo python3 setup.py install
+
+# install libraries Pillow, thingspeak and DHT
+python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade Pillow
+python3 -m pip install --upgrade thingspeak
+sudo pip3 install Adafruit_Python_DHT
+
+
+#Create autostart file as described in: bigl.es/tooling-tuesday-auto-start-a-gui-application-in-raspbian/
+
+sudo nano /etc/xdg/autostart/HomeControl.desktop
+
+[Desktop Entry]
+Type=Application
+Name=HomeControl
+Comment=Displays weather data and forecasts as well as the next Google Calendar entries
+NoDisplay=false
+Exec=python3 /home/pi/Schreibtisch/HomeControl/HomeControlGUI.py # change path if necessary, Schreibtisch may be Desktop!
+NotShowIn=GNOME;KDE;XFCE;
+
+#Enable I2c
+sudo raspi-config
+Interface Options
+
+#Maybe rotate display
+sudo nano /boot/config.txt
+'Add at the bottom:' display_rotate=2
+
+#Maybe change hostname
+sudo hostname -b 'new hostame'
+
+#Setup Desktop remote
+sudo apt-get install xrdp
+
+# Hide mouse after 30 s
+sudo apt-get install unclutter
+sudo nano /etc/default/unclutter
+EXTRA_OPTS="-idle 30 -root"
+
+# Turn off screensaver
+sudo apt-get install xscreensaver
+Then in the GUI go to Preferences > Screensaver > Display Modes > Select disable screen saver from the dropdown.
