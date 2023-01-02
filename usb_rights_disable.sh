@@ -1,0 +1,1 @@
+echo "0" > /sys/bus/usb/devices/1-1/authorized
